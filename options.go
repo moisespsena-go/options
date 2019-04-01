@@ -3,7 +3,7 @@ package options
 import (
 	"errors"
 
-	"github.com/moisespsena/go-error-wrap"
+	"github.com/moisespsena-go/error-wrap"
 )
 
 var EmptyKey = errors.New("Key is empty")
