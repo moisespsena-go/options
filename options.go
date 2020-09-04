@@ -1,9 +1,7 @@
 package options
 
 import (
-	"errors"
-
-	errwrap "github.com/moisespsena-go/error-wrap"
+	"github.com/pkg/errors"
 )
 
 var EmptyKey = errors.New("Key is empty")
@@ -22,7 +20,7 @@ func NewOptions(data ...map[string]interface{}) Options {
 
 func (oc Options) Set(key string, value interface{}) Options {
 	if key == "" {
-		panic(errwrap.Wrap(EmptyKey, "Options.Set"))
+		panic(errors.Wrap(EmptyKey, "Options.Set"))
 	}
 	(oc)[key] = value
 	return oc
@@ -39,7 +37,7 @@ func (oc Options) Del(keys ...string) {
 
 func (oc Options) Merge(key string, values ...map[string]interface{}) Options {
 	if key == "" {
-		panic(errwrap.Wrap(EmptyKey, "Options.Merge"))
+		panic(errors.Wrap(EmptyKey, "Options.Merge"))
 	}
 	for _, value := range values {
 		for k, v := range value {
@@ -62,7 +60,7 @@ func (oc Options) SetMany(key string, values ...map[string]interface{}) Options 
 func (oc Options) HasMany(key ...string) (ok bool) {
 	for i, k := range key {
 		if k == "" {
-			panic(errwrap.Wrap(EmptyKey, "Options.HasMany Key[%v]", i))
+			panic(errors.Wrapf(EmptyKey, "Options.HasMany Key[%v]", i))
 		}
 		_, ok = (oc)[k]
 		if !ok {
@@ -74,7 +72,7 @@ func (oc Options) HasMany(key ...string) (ok bool) {
 
 func (oc Options) Has(key string) (ok bool) {
 	if key == "" {
-		panic(errwrap.Wrap(EmptyKey, "Options.Has"))
+		panic(errors.Wrap(EmptyKey, "Options.Has"))
 	}
 	_, ok = (oc)[key]
 	return ok
@@ -94,7 +92,7 @@ func (oc Options) GetMany(key string, createIfNil ...bool) (value Options) {
 
 func (oc Options) Get(key string) (value interface{}, ok bool) {
 	if key == "" {
-		panic(errwrap.Wrap(EmptyKey, "Options.Get"))
+		panic(errors.Wrap(EmptyKey, "Options.Get"))
 	}
 	value, ok = (oc)[key]
 	return
