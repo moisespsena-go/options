@@ -3,7 +3,7 @@ package options
 import (
 	"errors"
 
-	"github.com/moisespsena-go/error-wrap"
+	errwrap "github.com/moisespsena-go/error-wrap"
 )
 
 var EmptyKey = errors.New("Key is empty")
@@ -26,6 +26,15 @@ func (oc Options) Set(key string, value interface{}) Options {
 	}
 	(oc)[key] = value
 	return oc
+}
+
+func (oc Options) Del(keys ...string) {
+	if oc == nil {
+		return
+	}
+	for _, key := range keys {
+		delete(oc, key)
+	}
 }
 
 func (oc Options) Merge(key string, values ...map[string]interface{}) Options {
